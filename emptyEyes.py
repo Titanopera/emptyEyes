@@ -1,5 +1,10 @@
 import PIL
 import pygame
+import button
+import gsm
+import room
+from rooms import menu
+from rooms import home
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -8,36 +13,31 @@ screen_width = 600
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-base_font = pygame.font.Font(None, 32)
-starter_text = "Empty Eyes Can Still Dream"
+#load button images
+start_img = pygame.image.load("images/start_btn.jpg").convert_alpha()
+# load_img = pygame.image.load("images/load_btn.png").convert_alpha()
+end_img = pygame.image.load("images/end_btn.jpg").convert_alpha()
+empty_eye_img = pygame.image.load("images/empty_eye.jpg").convert_alpha() 
+        
+start_btn = button.Button(125, 375, start_img, (150, 60))
+end_btn = button.Button(325, 375, end_img, (150, 60))
+eye_btn = button.Button(100, 200, empty_eye_img, (400, 100))
+        
+#Create the game state and set it to menu
+gameState = gsm.gameStateManager("menu")
 
+states = {"home":home.Home(screen, 0, "null", gameState), "menu":menu.Menu(screen, 0, {"eye_btn":eye_btn, "start_btn":start_btn, "end_btn":end_btn}, gameState,)}
 
-run = True
-menu = True
 play = True
-
-# while(run):
-#     while(menu):
-#         ans = input()
-#         if(ans == "1"):
-#             play = True
-#             menu = False
-#         if(ans == "2"):
-#             menu = False
-#             run = False
 while(play):
     for event in pygame.event.get():
         if(event.type == pygame.QUIT):
             pygame.quit()
-    screen.fill((23,34,78))
-    text_surface = base_font.render(starter_text, True, (255,255,255))
-    screen.blit(text_surface,(150,275))
-
-    #Have the eye image here
-
-
-    #Then have the player click the start button to get into the first room and the actual story.
-
+        # if(event.type == pygame.KEYDOWN):
+        #     event.unicode
+        #This runs whatever room I'm in.
+        states[gameState.getCurrentState()].run()
+    
 
     pygame.display.flip()
     clock.tick(60)
