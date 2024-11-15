@@ -25,12 +25,15 @@ eye_btn = button.Button(100, 200, empty_eye_img, (400, 100))
         
 #Create the game state and set it to menu
 gameState = gsm.gameStateManager("menu")
-base_font = pygame.font.Font(None, 32)
+old_base_font = pygame.font.Font(None, 24)
+base_font = pygame.font.SysFont("stixgeneralbolita", 18, bold=False, italic=False)
 
 states = {
     "home":home.Home(screen, 0, "null", gameState), 
     "menu":menu.Menu(screen, 0, {"eye_btn":eye_btn, "start_btn":start_btn, "end_btn":end_btn}, gameState), 
-    "test1":text.textBox(screen, 5, "Checking if this shit actually works", pygame.font.Font(None, 24), gameState)
+    "test1":text.textBox(screen, 5, ["Checking if this shit actually works", "Test For the second line", "Test For the third line. >"], base_font, gameState),
+    "textBoxList":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/test1.txt", "menu", base_font, gameState),
+    "exposition":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/expo.txt", "menu", base_font, gameState),
 }
 
 play = True

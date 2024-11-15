@@ -23,12 +23,10 @@ class Menu(room.Room):
                 self.gameStateManager.setCurrentState("home")
             if self.objects["end_btn"].draw(self.display):
                 print("End Clicked")
-                self.gameStateManager.setCurrentState("test1")
+                pygame.quit()
             if self.objects["eye_btn"].draw(self.display):
                 print("Eye Clicked")
             self.counter += 1
             pygame.display.flip()
             clock.tick(60)
-                #Draw the text a bit at a time.
-                #Nothing more done just a little easter egg that the image is secretely a button.
     
