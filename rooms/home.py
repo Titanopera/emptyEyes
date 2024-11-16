@@ -1,4 +1,5 @@
 import pygame
+import text
 import time
 clock = pygame.time.Clock()
 
@@ -22,11 +23,11 @@ class Home():
                 if(counter <= 5):
                     for i in range(counter):
                         time.sleep(1/counter)
-                        self.display.blit(text_surface,(150,300+i*5))
+                        self.display.blit(text_surface,(150+i*5,300+i*5))
                 else:
                     for i in range(counter):
                         time.sleep(.09/counter)
-                        self.display.blit(text_surface,(150,300+i*5))
+                        self.display.blit(text_surface,(150+i*5,300+i*5))
                 if(counter == 61):
                     self.starter_text = "10 Years"
                 counter +=1
@@ -51,7 +52,18 @@ class Home():
         elif("firstShrine" == self.result[-1]):
             self.result.remove("firstShrine")
             self.gameStateManager.setCurrentState("shrine")
+        elif("firstShop" == self.result[-1]):
+            if("doneMirror" in self.result):                
+                self.result.remove("firstShop")
+                self.result.append("doneShop")
+                self.gameStateManager.setCurrentState("storeExpo")
+            else:
+                text.textBox(self.display, 5, ["You Must Face Your Present Before Your Future"], pygame.font.SysFont("stixgeneralbolita", 24, bold=False, italic=False), self.gameStateManager).run() 
+                self.gameStateManager.setCurrentState("firstPrompt")
+        elif("doneShop" in self.result):
+            self.gameStateManager.setCurrentState("guardExpo")
         elif("entered" in self.result):
+            # print(self.result)
             #Set the state to a text input box.          
             self.gameStateManager.setCurrentState("firstPrompt")
         

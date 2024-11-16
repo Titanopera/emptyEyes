@@ -148,7 +148,7 @@ class textInput(textBox):
                         elif(event.key == pygame.K_RETURN):
                             try:
                                 self.room.result.append(self.returns[self.userInput])
-                                print(self.room.result)
+                                self.userInput = ""
                                 Ongoing = False
                                 self.gameState.setCurrentState(self.room.name)
                                 return 

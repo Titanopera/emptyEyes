@@ -18,7 +18,43 @@ class alex():
         
         gameState.setCurrentState(homeRoom.name)
         
+    def redoSkills(self, skills):
+        self.skills["beg"] = skills[0]
+        self.skills["bluff"] = skills[1]
+        self.skills["blackmail"] = skills[2]
+        
+    def useBeg(self):
+        self.skills["beg"] += 3
+        self.skills["bluff"] -= 1
+        self.skills["blackmail"] -= 1
+        if(self.skills["beg"] > 10):
+            self.skills["beg"] = 10
+        if(self.skills["bluff"] <0):
+            self.skills["bluff"] = 0
+        if(self.skills["blackmail"] <0):
+            self.skills["blackmail"] = 0
             
+    def useBluff(self):
+        self.skills["beg"] -= 1
+        self.skills["bluff"] += 3
+        self.skills["blackmail"] -= 1
+        if(self.skills["bluff"] > 10):
+            self.skills["bluff"] = 10
+        if(self.skills["beg"] <0):
+            self.skills["beg"] = 0
+        if(self.skills["blackmail"] <0):
+            self.skills["blackmail"] = 0
+            
+    def useBlackmail(self):
+        self.skills["beg"] -= 1
+        self.skills["bluff"] -= 1
+        self.skills["blackmail"] += 3
+        if(self.skills["blackmail"] > 10):
+            self.skills["blackail"] = 10
+        if(self.skills["bluff"] <0):
+            self.skills["bluff"] = 0
+        if(self.skills["beg"] <0):
+            self.skills["beg"] = 0
     
     def increaseSkill(self, skill):
         self.skills[skill] += 1

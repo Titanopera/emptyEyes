@@ -1,6 +1,7 @@
 class gameStateManager():
     def __init__(self, current):
         self.__currentState = current
+        self.result = ["None"]
         
     def setCurrentState(self, new):
         self.__currentState = new
