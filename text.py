@@ -114,14 +114,16 @@ class textBox():
         return
     
 class textInput(textBox):
-    def __init__(self, display, speed, text, font, gameState, room):
+    def __init__(self, display, speed, text, font, gameState, room, returns) -> None:
          super().__init__(display, speed, text, font, gameState)
          #Add in the personal font of Alex. Since it's the same no matter what no need to pass it in.
          self.pFont = None
-         
-    def textInpute(self):
-        # not made yet
-        pass
+         self.userInput = ''
+         self.room = room
+         self.returns = returns
+    
+    def setRoom(self, room):
+        self.room = room
     
     def run(self):
         #Draw the text imediately no scrolling. 
@@ -129,12 +131,32 @@ class textInput(textBox):
         #send that answer back to the room. and then have that answer change the result attribute.
         Ongoing = True
         while(Ongoing):
-            self.display.fill((0,0,0))
-            pygame.draw.rect(self.display, "white", (0, 500, 600, 100), 2)
-            current_text = self.font.render(self.text, True, (255,255,255))
-            self.display.blit(current_text, (10, 410))
-        for event in pygame.event.get():
-                if(event.type == pygame.QUIT):
-                    pygame.quit()
-         
+            self.surface.fill((0,0,0))
+            pygame.draw.rect(self.surface, "white", (0, 500, 600, 100), 2)
+            pygame.draw.rect(self.surface, "white", (0, 450, 600, 50), 2)
+            for i in range(len(self.text)):
+                current_text = self.font.render(self.text[i], True, (255,255,255))        
+                self.surface.blit(current_text, (10, 510+i*10))
+            user_text = self.font.render(self.userInput, True, (255,255,255))
+            self.surface.blit(user_text, (10, 460))
+            for event in pygame.event.get():
+                    if(event.type == pygame.QUIT):
+                        pygame.quit()
+                    if(event.type == pygame.KEYDOWN):
+                        if(event.key == pygame.K_BACKSPACE):
+                            self.userInput = self.userInput[:-1]
+                        elif(event.key == pygame.K_RETURN):
+                            try:
+                                self.room.result.append(self.returns[self.userInput])
+                                print(self.room.result)
+                                Ongoing = False
+                                self.gameState.setCurrentState(self.room.name)
+                                return 
+                            except KeyError:
+                                print("Not a provided answer")                         
+                        else:
+                            self.userInput += event.unicode            
+            pygame.display.flip()
+            clock.tick(60)
+        return
         

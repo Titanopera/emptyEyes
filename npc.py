@@ -1,25 +1,22 @@
 import sys
 import text
+import pygame
 class alex():
-    def __init__(self, hp, stats, skills):
+    def __init__(self, hp, skills):
         self.hp = hp
-        self.stats = stats
         self.skills = skills
         
-    def printChar(self, gameState, homeRoom):
+    def printChar(self, screen, gameState, homeRoom):
         #Do this in the text box.
-        text = []
-        text.append("Name: Alex")
-        print("Hp: " + str(self.hp))
-        for key, value in self.stats.items():
-            text.append(str(key) + ": " + str(value))
-        for key, value in self.skills.values():
-            text.append(str(key) + ": " + str(value))
+        texts = []
+        texts.append("Name: Alex")
+        texts.append("Beg: " + str(self.skills["beg"]))
+        texts.append("Bluff: " + str(self.skills["bluff"]))
+        texts.append("Blackmail: " + str(self.skills["blackmail"]))
         # smaller font size and it would be the custom font.
-        text.textBox()
-        #Start a textbox here. 
+        text.textBox(screen, 5, texts, pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState).run() 
         
-        gameState.setCurrent(homeRoom)
+        gameState.setCurrentState(homeRoom.name)
         
             
     
