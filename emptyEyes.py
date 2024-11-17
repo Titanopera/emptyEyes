@@ -44,7 +44,7 @@ shrine_btn3 = button.Button(250 ,300, shrine_img3, (200, 200))
 bottle_btn = button.Button(200, 100, bottle_img, (200, 400))
 MMR_btn = button.Button(200, 100, MMR_img, (100, 400))
 populist_btn = button.Button(200, 100, populist_img, (100, 400))
-idea_btn = button.Button(200, 100, idea_img, (100, 400))
+idea_btn = button.Button(100, 100, idea_img, (300, 400))
 leader_btn = button.Button(200, 100, leader_img, (100, 400))
         
 #Create the game state and set it to menu
@@ -67,7 +67,10 @@ states = {
     "guardExpo":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/guardExpo.txt", "hedonist", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
     "hedonist":cultist.Hedonist(screen, "None", {"bottle_btn":bottle_btn, "eye_btn":eye_btn}, gameState),
     "storeExpo":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/storeExpo.txt", "store", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
-    
+    "idealogue":cultist.Idealogue(screen, "None", {"idea_btn":idea_btn, "eye_btn":eye_btn}, gameState),
+    #Final boss not made yet.
+    "fDrEeSePdAoImR":cultist.Leader(screen, "None", {"leader_btn":leader_btn, "eye_btn":eye_btn}, gameState),
+    "epilogue":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/epi.txt", "store", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
 }
 
 #attaching the room to be changed here.
