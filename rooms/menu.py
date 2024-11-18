@@ -1,6 +1,6 @@
 import pygame
 import room
-import text
+import time
 clock = pygame.time.Clock()
 
 class Menu(room.Room):
@@ -23,6 +23,7 @@ class Menu(room.Room):
                 self.gameStateManager.setCurrentState("home")
             if self.objects["end_btn"].draw(self.display):
                 print("End Clicked")
+                # self.gameStateManager.setCurrentState("end")
                 pygame.quit()
             if self.objects["eye_btn"].draw(self.display):
                 print("Eye Clicked")

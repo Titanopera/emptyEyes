@@ -107,6 +107,8 @@ class textBox():
                             self.active_text += 1
                             self.texts = self.text[self.active_text]
                             self.counter = 0
+                    elif(event.key == pygame.K_ESCAPE):
+                        return
                 #Set up an if statement that checks if the enter key is pressed and all the words are written
                 # if so it moves on to the room pointed next in the linked list
             pygame.display.flip()
@@ -153,9 +155,16 @@ class textInput(textBox):
                                 self.gameState.setCurrentState(self.room.name)
                                 return 
                             except KeyError:
-                                print("Not a provided answer")                         
+                                print("Not a provided answer")
+                        #Would need to restructure several things to implement this.
+                        # elif(event.key == pygame.K_ESCAPE):
+                        #     self.gameState.alex.printChar(self.screen, )
+                        elif(event.key == pygame.K_ESCAPE):
+                            pass             
                         else:
-                            self.userInput += event.unicode            
+                            self.userInput += event.unicode
+                        
+                                        
             pygame.display.flip()
             clock.tick(60)
         return

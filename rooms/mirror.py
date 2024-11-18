@@ -36,14 +36,14 @@ class Mirror(room.Room):
                 self.result.remove("beg")
             elif(self.result[-1]=="bluff"):
                 print("bluff")
-                skills = [1,3,1]
+                skills = [2,2,2]
                 self.result.remove("bluff")
             elif(self.result[-1]=="blackmail"):    
                 print("blackmail")
                 skills = [1,2,3]
                 self.result.remove("blackmail")            
             self.alex.redoSkills(skills)
-            self.alex.printChar(self.display, self.gameStateManager, self.homeRoom)
+            self.alex.printChar(self.display, self.gameStateManager, self.homeRoom.name)
             #Call the create alex thing.
         #catch all the new results and turn it into a thing. 
         # Then display the character sheet.

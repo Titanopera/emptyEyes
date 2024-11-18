@@ -61,6 +61,7 @@ class Home():
                 text.textBox(self.display, 5, ["You Must Face Your Present Before Your Future"], pygame.font.SysFont("stixgeneralbolita", 24, bold=False, italic=False), self.gameStateManager).run() 
                 self.gameStateManager.setCurrentState("firstPrompt")
         elif("doneShop" in self.result):
+            self.gameStateManager.result.append(self.result[-1])
             self.gameStateManager.setCurrentState("guardExpo")
         elif("entered" in self.result):
             # print(self.result)

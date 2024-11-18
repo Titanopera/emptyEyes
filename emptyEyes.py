@@ -1,4 +1,3 @@
-import PIL
 import pygame
 import button
 import gsm
@@ -10,10 +9,13 @@ import text
 from rooms import mirror
 from rooms import shrine
 import npc
+from rooms import leader
+from rooms import end
 pygame.init()
 clock = pygame.time.Clock()
 skills = {"beg":1, "bluff":1, "blackmail":1}
-alex = npc.alex(4, skills)
+alex = npc.Alex(4, skills)
+x = 3
 
 screen_width = 600
 screen_height = 600
@@ -32,7 +34,7 @@ MMR_img = pygame.image.load("/Users/alexey/Desktop/visualStudioPrograms/ottterJa
 leader_img = pygame.image.load("/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/images/despairFreedom.jpg").convert_alpha() 
 populist_img = pygame.image.load("/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/images/populist.jpg").convert_alpha() 
 idea_img = pygame.image.load("/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/images/idealogue.jpg").convert_alpha() 
-
+FullEye_img = pygame.image.load("/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/images/full_eye_img.jpg").convert_alpha() 
         
 start_btn = button.Button(125, 375, start_img, (150, 60))
 end_btn = button.Button(325, 375, end_img, (150, 60))
@@ -44,20 +46,21 @@ shrine_btn3 = button.Button(250 ,300, shrine_img3, (200, 200))
 bottle_btn = button.Button(200, 100, bottle_img, (200, 400))
 MMR_btn = button.Button(200, 100, MMR_img, (100, 400))
 populist_btn = button.Button(200, 100, populist_img, (100, 400))
-idea_btn = button.Button(100, 100, idea_img, (300, 400))
-leader_btn = button.Button(200, 100, leader_img, (100, 400))
+idea_btn = button.Button(150, 100, idea_img, (300, 400))
+leader_btn = button.Button(100, 100, leader_img, (400, 400))
+FullEye_btn = button.Button(100, 200, FullEye_img, (400, 100))
         
 #Create the game state and set it to menu
-gameState = gsm.gameStateManager("menu")
+gameState = gsm.gameStateManager("menu", alex)
 old_base_font = pygame.font.Font(None, 24)
 base_font = pygame.font.SysFont("stixgeneralbolita", 18, bold=False, italic=False)
 
 states = {
     "home":home.Home(screen, 0, "None", gameState), 
-    "menu":menu.Menu(screen, 0, {"eye_btn":eye_btn, "start_btn":start_btn, "end_btn":end_btn}, gameState), 
+    "menu":menu.Menu(screen, 0, {"eye_btn":eye_btn, "start_btn":start_btn, "end_btn":end_btn, "leader_btn":leader_btn}, gameState), 
     "test1":text.textBox(screen, 5, ["Checking if this shit actually works", "Test For the second line", "Test For the third line. >"], base_font, gameState),
     "textBoxList":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/test1.txt", "menu", base_font, gameState),
-    "exposition":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/expo.txt", "home", base_font, gameState),
+    "exposition":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/expo.txt", "home", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
     "firstPrompt":text.textInput(screen, 5, ["You find yourself in your home above your store front, you can move towards", "1. The Mirror Find Your Present", "2. The Shrine Find Your Past", "3.The Shop Find Your Future"], pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState, "", {"1":"firstMirror", "2":"firstShrine", "3":"firstShop",}),
     "mirror":mirror.Mirror(screen, "None", {"mirror_btn":mirror_btn}, gameState, "", alex),
     "specChoose":text.textInput(screen, 5, ["Do You Wish To Specialize In", "1. Begging, see into others greatest desires, invoke pity, and persuade others", "2. Blackmail, see into others greatest fears, wield fear, and intimidate others", "3. Bluff, see what others want right now, wield lies, confuse others"], pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState, "", {"1":"beg", "2":"blackmail", "3":"bluff",}),
@@ -68,9 +71,9 @@ states = {
     "hedonist":cultist.Hedonist(screen, "None", {"bottle_btn":bottle_btn, "eye_btn":eye_btn}, gameState),
     "storeExpo":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/storeExpo.txt", "store", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
     "idealogue":cultist.Idealogue(screen, "None", {"idea_btn":idea_btn, "eye_btn":eye_btn}, gameState),
-    #Final boss not made yet.
-    "fDrEeSePdAoImR":cultist.Leader(screen, "None", {"leader_btn":leader_btn, "eye_btn":eye_btn}, gameState),
-    "epilogue":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/epi.txt", "store", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
+    "fDrEeSePdAoImR":leader.Leader(screen, {"leader_btn":leader_btn}, gameState),
+    "epilogue":text.textBoxList(screen, 2, "/Users/alexey/Desktop/visualStudioPrograms/ottterJams/November_2024_UnseenWorlds/text_files/epi.txt", "end", pygame.font.SysFont("stixgeneralbolita", 12, bold=False, italic=False), gameState),
+    "end":end.End(screen, {"eye_btn":FullEye_btn}, gameState), 
 }
 
 #attaching the room to be changed here.
